@@ -47,8 +47,8 @@ def fibonacci(num):
           
     return jsonify({"input":num, "output":sm})
         
-@app.route('/factorial/<string:message>', methods=['GET'])
-def md5(message):
+@app.route('/is-prime/<int:message>', methods=['GET'])
+def prime(message):
     return jsonify({'input':message, 'result': hashlib.md5(message)})
 
 
