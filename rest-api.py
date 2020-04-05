@@ -1,20 +1,10 @@
 import flask
 import hashlib
+import math
 from flask import request, jsonify
 app = flask.Flask(__name__)
 app.config["DEBUG"] = False
-
-def is_prime(n):
-    if (n==1):
-        return False
-    elif (n==2):
-        return True;
-    else:
-        for x in range(2,n):
-            if(n % x==0):
-                return False
-        return True  
-
+ 
 @app.route('/', methods=['GET'])
 def home():
     return "<h1>Rest API</h1><p>This site is under construction.</p>"
@@ -24,10 +14,10 @@ def factorial(num):
     return jsonify({'input':num, 'result': math.factorial(num)})
 
 # MD5 Hash Function
-@app.route('/md5/<str:string>', methods=['GET'})
+@app.route('/md5/<string:string>', methods=['GET'])
 def hash_function(string):
     result = hashlib.md5(string.encode()) #Encode string
-    print(result.hexdigest()) #Print md5 hash
+    return jsonify(result.hexdigest()) #Print md5 hash
 
 @app.route('/fibonacci/<int:num>', methods=['GET'])
 def fibonacci(num):
@@ -47,9 +37,17 @@ def fibonacci(num):
           
     return jsonify({"input":num, "output":sm})
         
-@app.route('/is-prime/<int:message>', methods=['GET'])
-def prime(message):
-    return jsonify({'input':message, 'result': hashlib.md5(message)})
+@app.route('/is-prime/<int:n>', methods=['GET'])
+def is_prime(n):
+    if (n==1):
+        return jsonify("False")
+    elif (n==2):
+        return jsonify("True")
+    else:
+        for x in range(2,n):
+            if(n % x==0):
+                return jsonify("False")
+        return jsonify("True") 
 
 
 app.run()
