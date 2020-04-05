@@ -1,4 +1,5 @@
 import flask
+import hashlib
 from flask import request, jsonify
 app = flask.Flask(__name__)
 app.config["DEBUG"] = False
@@ -11,6 +12,12 @@ def home():
 @app.route('/factorial/<int:num>', methods=['GET'])
 def factorial(num):
     return jsonify({'input':num, 'result': math.factorial(num)})
+
+# MD5 Hash Function
+@app.route('/md5/<str:string>', methods=['GET'})
+def hash_function(string):
+    result = hashlib.md5(string.encode()) #Encode string
+    print(result.hexdigest()) #Print md5 hash
 
 @app.route('/fibonacci/<int:num>', methods=['GET'])
 def fibonacci(num):
