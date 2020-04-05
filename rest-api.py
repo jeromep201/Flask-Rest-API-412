@@ -54,7 +54,7 @@ def is_prime(n):
 #Slack Alert Function
 @app.route('/slack-alert/<string:string>', methods=['GET'])
 def slack_alert(string):
-    url = 'https://hooks.slack.com/services/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'
+    url = 'https://hooks.slack.com/services/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'
     requests.post(url,data=json.dumps(string))
     return jsonify({'input':string, 'result': "True"})
 
