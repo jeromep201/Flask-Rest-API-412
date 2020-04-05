@@ -1,6 +1,8 @@
 import flask
 import hashlib
 import math
+import requests
+import json
 from flask import request, jsonify
 app = flask.Flask(__name__)
 app.config["DEBUG"] = False
@@ -48,6 +50,12 @@ def is_prime(n):
             if(n % x==0):
                 return jsonify("False")
         return jsonify("True") 
-
+       
+#Slack Alert Function
+@app.route('/slack-alert/<string:string>', methods=['GET'])
+def slack_alert(string):
+    url = 'https://hooks.slack.com/services/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'
+    requests.post(url,data=json.dumps(string))
+    return jsonify({'input':string, 'result': "True"})
 
 app.run()
